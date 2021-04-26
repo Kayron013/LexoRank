@@ -19,9 +19,10 @@ expect(rank.value).toBe('zc4b');
 ```
 
 Ranks ending in `0` are disallowed to avoid ajacencies.
-This means there is always room to insert between two unequal ranks.
+As a result, there is always room to insert between two unequal ranks.
 
 ```ts
+expect(new LexoRank('2c0','1')).toThrow('Invalid lex value');
 expect(LexoRank.from('1|2c0')).toThrow('Invalid lex string');
 ```
 
@@ -59,6 +60,6 @@ expect(btwn.toString()).toBe('0|e5z1');
 ```
 
 ```ts
-const btwn = LexoRank.between('0|e5z1', '0|ez11');
+const btwn = LexoRank.between('0|e5z1', '0|e5z11');
 expect(btwn.toString()).toBe('0|e5z101');
 ```
