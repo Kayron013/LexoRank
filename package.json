@@ -1,0 +1,29 @@
+{
+  "name": "lexorank",
+  "version": "1.0.0",
+  "description": "Class for utilizing LexoRanking",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kayron013/LexoRank.git"
+  },
+  "keywords": [
+    "lexorank"
+  ],
+  "author": "Angel Campbell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kayron013/LexoRank/issues"
+  },
+  "homepage": "https://github.com/Kayron013/LexoRank#readme",
+  "devDependencies": {
+    "@types/jest": "^26.0.22",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.5",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  }
+}
