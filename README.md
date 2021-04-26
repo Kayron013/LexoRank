@@ -18,6 +18,13 @@ expect(rank.bucket).toBe('0');
 expect(rank.value).toBe('zc4b');
 ```
 
+Ranks ending in `0` are disallowed to avoid ajacencies.
+This means there is always room to insert between two unequal ranks.
+
+```ts
+expect(LexoRank.from('1|2c0')).toThrow('Invalid lex string');
+```
+
 ### Increment a rank.
 
 ```ts
