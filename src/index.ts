@@ -111,8 +111,8 @@ export default class LexoRank {
     return String.fromCharCode(char.charCodeAt(0) - 1);
   }
 
-  static between(lexBefore: Lex | null, lexAfter: Lex): LexoRank;
-  static between(lexBefore: Lex, lexAfter: Lex | null): LexoRank;
+  static between(lexBefore: Lex | null | undefined, lexAfter: Lex): LexoRank;
+  static between(lexBefore: Lex, lexAfter: Lex | null | undefined): LexoRank;
   static between(lexBefore: Lex, lexAfter: Lex): LexoRank {
     if (!lexBefore && !lexAfter) {
       throw 'Only one argument may be null';
