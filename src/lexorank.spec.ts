@@ -66,6 +66,27 @@ describe('LexoRank - Increment', () => {
   });
 });
 
+describe('LexoRank - Decrement', () => {
+  test('single char', () => {
+    expect(new LexoRank('1').decrement().toString()).toBe('0|01');
+    expect(new LexoRank('8', '1').decrement().toString()).toBe('1|7');
+    expect(new LexoRank('a', '0').decrement().toString()).toBe('0|9');
+    expect(new LexoRank('b', '2').decrement().toString()).toBe('2|a');
+    expect(LexoRank.from('2|z').decrement().toString()).toBe('2|y');
+    expect(LexoRank.from('0|z1').decrement().toString()).toBe('0|y');
+  });
+
+  test('multiple chars', () => {
+    expect(new LexoRank('11', '2').decrement().toString()).toBe('2|01');
+    expect(new LexoRank('2c').decrement().toString()).toBe('0|1');
+    expect(new LexoRank('10a', '2').decrement().toString()).toBe('2|01');
+    expect(new LexoRank('ac', '1').decrement().toString()).toBe('1|9');
+    expect(LexoRank.from('0|zz').decrement().toString()).toBe('0|y');
+    expect(LexoRank.from('0|01').decrement().toString()).toBe('0|001');
+    expect(LexoRank.from('1|01001').decrement().toString()).toBe('1|001');
+  });
+});
+
 describe('LexoRank - Between', () => {
   test('throws for invalid input', () => {
     const lexBetween = (a: string | LexoRank, b: string | LexoRank) => jest.fn(() => LexoRank.between(a, b));
@@ -78,10 +99,18 @@ describe('LexoRank - Between', () => {
     expect(lexBetween(new LexoRank('a'), '2|z4')).toThrow('Lex buckets must be the same');
   });
 
+  test('on edge', () => {
+    expect(LexoRank.between(null, '0|3').toString()).toBe('0|2');
+    expect(LexoRank.between(null, '0|a4').toString()).toBe('0|9');
+    expect(LexoRank.between('0|3', null).toString()).toBe('0|4');
+    expect(LexoRank.between('0|a4', null).toString()).toBe('0|a5');
+  });
+
   test('single char', () => {
     expect(LexoRank.between('0|1', '0|3').toString()).toBe('0|2');
     expect(LexoRank.between('1|1', '1|9').toString()).toBe('1|2');
     expect(LexoRank.between('1|9', '1|c').toString()).toBe('1|a');
+
     expect(LexoRank.between(new LexoRank('a', '2'), '2|z').toString()).toBe('2|b');
     expect(LexoRank.between('1|1', new LexoRank('2', '1')).toString()).toBe('1|11');
     expect(LexoRank.between(new LexoRank('a'), new LexoRank('b')).toString()).toBe('0|a1');

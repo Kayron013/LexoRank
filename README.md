@@ -22,7 +22,7 @@ Ranks ending in `0` are disallowed to avoid ajacencies.
 As a result, there is always room to insert between two unequal ranks.
 
 ```ts
-expect(new LexoRank('2c0','1')).toThrow('Invalid lex value');
+expect(new LexoRank('2c0', '1')).toThrow('Invalid lex value');
 expect(LexoRank.from('1|2c0')).toThrow('Invalid lex string');
 ```
 
@@ -44,6 +44,32 @@ expect(rank.toString()).toBe('0|x2z');
 expect(newRank.toString()).toBe('0|x3');
 ```
 
+### Decrement a rank.
+
+```ts
+const rank = new LexoRank('a3c', '2');
+const newRank = rank.decrement();
+
+expect(rank.toString()).toBe('2|a3c');
+expect(newRank.toString()).toBe('2|a3b');
+```
+
+```ts
+const rank = new LexoRank('ac4');
+const newRank = rank.decrement();
+
+expect(rank.toString()).toBe('0|ac4');
+expect(newRank.toString()).toBe('0|9');
+```
+
+```ts
+const rank = new LexoRank('11');
+const newRank = rank.decrement();
+
+expect(rank.toString()).toBe('0|11');
+expect(newRank.toString()).toBe('0|01');
+```
+
 ### Get a rank in between two ranks
 
 ```ts
@@ -62,4 +88,14 @@ expect(btwn.toString()).toBe('0|e5z1');
 ```ts
 const btwn = LexoRank.between('0|e5z1', '0|e5z11');
 expect(btwn.toString()).toBe('0|e5z101');
+```
+
+```ts
+const btwn = LexoRank.between('0|e5z1', null);
+expect(btwn.toString()).toBe('0|e5z2');
+```
+
+```ts
+const btwn = LexoRank.between(null, '0|e5z11');
+expect(btwn.toString()).toBe('0|d');
 ```

@@ -76,6 +76,23 @@ export default class LexoRank {
     return new LexoRank(newVal, this.bucket);
   }
 
+  decrement() {
+    for (let idx = 0; idx < this.value.length; idx++) {
+      const char = this.value[idx];
+      if (char === '0') continue;
+
+      if (char === '1') {
+        const newVal = '0' + this.value.substring(0, idx + 1);
+        return new LexoRank(newVal, this.bucket);
+      }
+
+      const newVal = this.value.substring(0, idx) + LexoRank.decrementChar(char);
+      return new LexoRank(newVal, this.bucket);
+    }
+
+    throw 'Invalid LexoRank';
+  }
+
   private append(str: string) {
     return new LexoRank(this.value + str, this.bucket);
   }
@@ -87,30 +104,51 @@ export default class LexoRank {
     return String.fromCharCode(char.charCodeAt(0) + 1);
   }
 
-  public static between(lexA: Lex, lexB: Lex): LexoRank {
-    const a = LexoRank.from(lexA);
-    const b = LexoRank.from(lexB);
+  private static decrementChar(char: String) {
+    if (char === '1') return '-1';
+    if (char === 'a') return '9';
 
-    if (a.bucket !== b.bucket) {
+    return String.fromCharCode(char.charCodeAt(0) - 1);
+  }
+
+  static between(lexBefore: Lex | null, lexAfter: Lex): LexoRank;
+  static between(lexBefore: Lex, lexAfter: Lex | null): LexoRank;
+  static between(lexBefore: Lex, lexAfter: Lex): LexoRank {
+    if (!lexBefore && !lexAfter) {
+      throw 'Only one argument may be null';
+    }
+
+    if (!lexAfter) {
+      return LexoRank.from(lexBefore).increment();
+    }
+
+    if (!lexBefore) {
+      return LexoRank.from(lexAfter).decrement();
+    }
+
+    const before = LexoRank.from(lexBefore);
+    const after = LexoRank.from(lexAfter);
+
+    if (before.bucket !== after.bucket) {
       throw 'Lex buckets must be the same';
     }
 
-    if (!a.lessThan(b)) {
-      throw `${a.value} is not less than ${b.value}`;
+    if (!before.lessThan(after)) {
+      throw `${before.value} is not less than ${after.value}`;
     }
 
-    const incremented = a.increment();
-    if (incremented.lessThan(b)) return incremented;
+    const incremented = before.increment();
+    if (incremented.lessThan(after)) return incremented;
 
-    const plus1 = a.append('1');
-    if (plus1.lessThan(b)) return plus1;
+    const plus1 = before.append('1');
+    if (plus1.lessThan(after)) return plus1;
 
     let pre = '0';
-    let plus01 = a.append(`${pre}1`);
+    let plus01 = before.append(`${pre}1`);
 
-    while (!plus01.lessThan(b)) {
+    while (!plus01.lessThan(after)) {
       pre += '0';
-      plus01 = a.append(`${pre}1`);
+      plus01 = before.append(`${pre}1`);
     }
 
     return plus01;
