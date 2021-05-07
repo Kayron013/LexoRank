@@ -37,7 +37,7 @@ export default class LexoRank {
 
   static nextBucket(bucket: string) {
     if (!this.isValidLexBucket(bucket)) {
-      throw `Invalid lex value "${bucket}"`;
+      throw `Invalid lex bucket "${bucket}"`;
     }
 
     if (bucket === '2') return '0';
@@ -46,7 +46,7 @@ export default class LexoRank {
 
   static prevBucket(bucket: string) {
     if (!this.isValidLexBucket(bucket)) {
-      throw `Invalid lex value "${bucket}"`;
+      throw `Invalid lex bucket "${bucket}"`;
     }
 
     if (bucket === '0') return '2';
