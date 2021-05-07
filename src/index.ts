@@ -35,6 +35,24 @@ export default class LexoRank {
     return `${this.bucket}|${this.value}`;
   }
 
+  static nextBucket(bucket: string) {
+    if (!this.isValidLexBucket(bucket)) {
+      throw `Invalid lex value "${bucket}"`;
+    }
+
+    if (bucket === '2') return '0';
+    return String.fromCharCode(bucket.charCodeAt(0) + 1);
+  }
+
+  static prevBucket(bucket: string) {
+    if (!this.isValidLexBucket(bucket)) {
+      throw `Invalid lex value "${bucket}"`;
+    }
+
+    if (bucket === '0') return '2';
+    return String.fromCharCode(bucket.charCodeAt(0) - 1);
+  }
+
   private static isValidLexValue(value: string) {
     const regex = /^[0-9a-z]*[1-9a-z]$/;
     return regex.test(value);
