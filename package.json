@@ -10,12 +10,7 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "lint": "tsc --noEmit",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm run test && npm run lint",
-    "preversion": "npm run lint",
-    "version": "git add -A src",
-    "postversion": "git push && git push --tags"
+    "lint": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
