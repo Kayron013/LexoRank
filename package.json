@@ -1,17 +1,30 @@
 {
-  "name": "lexorank",
+  "name": "@kayron013/lexorank",
   "version": "1.0.0",
   "description": "Class for utilizing LexoRanking",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/**/*"
+  ],
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc",
+    "lint": "tsc --noEmit",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Kayron013/LexoRank.git"
   },
   "keywords": [
-    "lexorank"
+    "lexorank",
+    "ranking",
+    "jira"
   ],
   "author": "Angel Campbell",
   "license": "ISC",
