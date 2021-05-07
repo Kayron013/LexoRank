@@ -1,6 +1,6 @@
 {
   "name": "@kayron013/lexorank",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "An immutable class implementation of the LexoRank ranking system by Atlassian JIRA",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
