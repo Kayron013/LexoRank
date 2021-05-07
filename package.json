@@ -12,6 +12,9 @@
     "build": "tsc",
     "lint": "tsc --noEmit"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Kayron013/LexoRank.git"
