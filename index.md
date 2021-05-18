@@ -1,6 +1,4 @@
-# LexoRank
-
-An immutable class implementation of the [LexoRank ranking system](https://youtu.be/OjQv9xMoFbg) by Atlassian JIRA.
+This package is an immutable class implementation of the [LexoRank ranking system](https://youtu.be/OjQv9xMoFbg) by Atlassian JIRA.
 
 ## Usage
 
