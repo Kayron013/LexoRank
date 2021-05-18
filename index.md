@@ -1,37 +1,101 @@
-## Welcome to GitHub Pages
+# LexoRank
 
-You can use the [editor on GitHub](https://github.com/Kayron013/LexoRank/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+An immutable class implementation of the [LexoRank ranking system](https://youtu.be/OjQv9xMoFbg) by Atlassian JIRA.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Usage
 
-### Markdown
+### Create and read rank.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+```ts
+const rank = new LexoRank('zc4b', '0');
+// or
+// const rank = new LexoRank('zc4b'); // default bucket of `0`
+// or
+// const rank = LexoRank.from('0|zc4b');
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+expect(rank.toString()).toBe('0|zc4b');
+expect(rank.bucket).toBe('0');
+expect(rank.value).toBe('zc4b');
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Ranks ending in `0` are disallowed to avoid ajacencies.
+As a result, there is always room to insert between two unequal ranks.
 
-### Jekyll Themes
+```ts
+expect(new LexoRank('2c0', '1')).toThrow('Invalid lex value');
+expect(LexoRank.from('1|2c0')).toThrow('Invalid lex string');
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Kayron013/LexoRank/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+### Increment a rank.
 
-### Support or Contact
+```ts
+const rank = new LexoRank('a3c', '2');
+const newRank = rank.increment();
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+expect(rank.toString()).toBe('2|a3c');
+expect(newRank.toString()).toBe('2|a3d');
+```
+
+```ts
+const rank = new LexoRank('x2z');
+const newRank = rank.increment();
+
+expect(rank.toString()).toBe('0|x2z');
+expect(newRank.toString()).toBe('0|x3');
+```
+
+### Decrement a rank.
+
+```ts
+const rank = new LexoRank('a3c', '2');
+const newRank = rank.decrement();
+
+expect(rank.toString()).toBe('2|a3c');
+expect(newRank.toString()).toBe('2|a3b');
+```
+
+```ts
+const rank = new LexoRank('ac4');
+const newRank = rank.decrement();
+
+expect(rank.toString()).toBe('0|ac4');
+expect(newRank.toString()).toBe('0|9');
+```
+
+```ts
+const rank = new LexoRank('11');
+const newRank = rank.decrement();
+
+expect(rank.toString()).toBe('0|11');
+expect(newRank.toString()).toBe('0|01');
+```
+
+### Get a rank in between two ranks
+
+```ts
+const rank1 = new LexoRank('9a2r');
+const rank2 = new LexoRank('9a3r');
+
+const btwn = LexoRank.between(rank1, rank2);
+expect(btwn.toString()).toBe('0|9a2s');
+```
+
+```ts
+const btwn = LexoRank.between('0|e5z', '0|e6');
+expect(btwn.toString()).toBe('0|e5z1');
+```
+
+```ts
+const btwn = LexoRank.between('0|e5z1', '0|e5z11');
+expect(btwn.toString()).toBe('0|e5z101');
+```
+
+```ts
+const btwn = LexoRank.between('0|e5z1', null);
+expect(btwn.toString()).toBe('0|e5z2');
+```
+
+```ts
+const btwn = LexoRank.between(null, '0|e5z11');
+expect(btwn.toString()).toBe('0|d');
+```
