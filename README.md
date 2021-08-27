@@ -55,11 +55,11 @@ expect(newRank.toString()).toBe('2|a3b');
 ```
 
 ```ts
-const rank = new LexoRank('ac4');
+const rank = new LexoRank('zz');
 const newRank = rank.decrement();
 
-expect(rank.toString()).toBe('0|ac4');
-expect(newRank.toString()).toBe('0|9');
+expect(rank.toString()).toBe('0|zz');
+expect(newRank.toString()).toBe('0|y');
 ```
 
 ```ts
