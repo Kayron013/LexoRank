@@ -71,19 +71,18 @@ describe('LexoRank - Decrement', () => {
     expect(new LexoRank('1').decrement().toString()).toBe('0|01');
     expect(new LexoRank('8', '1').decrement().toString()).toBe('1|7');
     expect(new LexoRank('a', '0').decrement().toString()).toBe('0|9');
-    expect(new LexoRank('b', '2').decrement().toString()).toBe('2|a');
+    expect(LexoRank.from('2|b').decrement().toString()).toBe('2|a');
     expect(LexoRank.from('2|z').decrement().toString()).toBe('2|y');
-    expect(LexoRank.from('0|z1').decrement().toString()).toBe('0|y');
   });
 
   test('multiple chars', () => {
-    expect(new LexoRank('11', '2').decrement().toString()).toBe('2|01');
-    expect(new LexoRank('2c').decrement().toString()).toBe('0|1');
-    expect(new LexoRank('10a', '2').decrement().toString()).toBe('2|01');
-    expect(new LexoRank('ac', '1').decrement().toString()).toBe('1|9');
-    expect(LexoRank.from('0|zz').decrement().toString()).toBe('0|y');
+    expect(new LexoRank('11', '2').decrement().toString()).toBe('2|1');
+    expect(new LexoRank('2c').decrement().toString()).toBe('0|2b');
+    expect(new LexoRank('10a', '2').decrement().toString()).toBe('2|109');
+    expect(new LexoRank('ac', '1').decrement().toString()).toBe('1|ab');
+    expect(LexoRank.from('0|z1').decrement().toString()).toBe('0|z');
     expect(LexoRank.from('0|01').decrement().toString()).toBe('0|001');
-    expect(LexoRank.from('1|01001').decrement().toString()).toBe('1|001');
+    expect(LexoRank.from('1|01001').decrement().toString()).toBe('1|01');
   });
 });
 
@@ -101,7 +100,7 @@ describe('LexoRank - Between', () => {
 
   test('on edge', () => {
     expect(LexoRank.between(null, '0|3').toString()).toBe('0|2');
-    expect(LexoRank.between(null, '0|a4').toString()).toBe('0|9');
+    expect(LexoRank.between(null, '0|a4').toString()).toBe('0|a3');
     expect(LexoRank.between('0|3', null).toString()).toBe('0|4');
     expect(LexoRank.between('0|a4', null).toString()).toBe('0|a5');
   });

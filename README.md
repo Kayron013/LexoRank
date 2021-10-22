@@ -55,19 +55,27 @@ expect(newRank.toString()).toBe('2|a3b');
 ```
 
 ```ts
-const rank = new LexoRank('zz');
+const rank = new LexoRank('z1');
 const newRank = rank.decrement();
 
-expect(rank.toString()).toBe('0|zz');
-expect(newRank.toString()).toBe('0|y');
+expect(rank.toString()).toBe('0|z1');
+expect(newRank.toString()).toBe('0|z');
 ```
 
 ```ts
-const rank = new LexoRank('11');
+const rank = new LexoRank('03001');
 const newRank = rank.decrement();
 
-expect(rank.toString()).toBe('0|11');
-expect(newRank.toString()).toBe('0|01');
+expect(rank.toString()).toBe('0|03001');
+expect(newRank.toString()).toBe('0|03');
+```
+
+```ts
+const rank = new LexoRank('01');
+const newRank = rank.decrement();
+
+expect(rank.toString()).toBe('0|01');
+expect(newRank.toString()).toBe('0|001');
 ```
 
 ### Get a rank in between two ranks

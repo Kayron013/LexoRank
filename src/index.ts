@@ -1,8 +1,5 @@
 export default class LexoRank {
-  readonly value: string;
-  readonly bucket: string;
-
-  constructor(value: string, bucket = '0') {
+  constructor(readonly value: string, readonly bucket = '0') {
     if (!LexoRank.isValidLexValue(value)) {
       throw `Invalid lex value "${value}"`;
     }
@@ -95,20 +92,34 @@ export default class LexoRank {
   }
 
   decrement() {
-    for (let idx = 0; idx < this.value.length; idx++) {
-      const char = this.value[idx];
-      if (char === '0') continue;
+    const length = this.value.length;
+    const char = this.value[length - 1];
 
-      if (char === '1') {
-        const newVal = '0' + this.value.substring(0, idx + 1);
-        return new LexoRank(newVal, this.bucket);
-      }
-
-      const newVal = this.value.substring(0, idx) + LexoRank.decrementChar(char);
+    if (char !== '1') {
+      const newVal = this.value.substring(0, length - 1) + LexoRank.decrementChar(char);
       return new LexoRank(newVal, this.bucket);
     }
 
-    throw 'Invalid LexoRank';
+    if (this.hasNonZeroLeadingChars()) {
+      const newVal = LexoRank.cleanTrailingZeros(this.value.substring(0, length - 1));
+      return new LexoRank(newVal, this.bucket);
+    }
+
+    const newVal = '0' + this.value;
+    return new LexoRank(newVal, this.bucket);
+  }
+
+  private hasNonZeroLeadingChars() {
+    return this.value.length > 1 && !this.value.substr(0, this.value.length - 1).match(/^0+$/);
+  }
+
+  private static cleanTrailingZeros(str: string) {
+    const regex = /^(?<value>[0-9a-z]*[1-9a-z])0*$/;
+    const match = regex.exec(str);
+    if (!match) {
+      throw 'Invalid lex string';
+    }
+    return match.groups!.value;
   }
 
   private append(str: string) {
