@@ -105,5 +105,5 @@ expect(btwn.toString()).toBe('0|e5z2');
 
 ```ts
 const btwn = LexoRank.between(null, '0|e5z11');
-expect(btwn.toString()).toBe('0|d');
+expect(btwn.toString()).toBe('0|e5z1');
 ```
