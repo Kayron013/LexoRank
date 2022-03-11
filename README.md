@@ -2,6 +2,8 @@
 
 An immutable class implementation of the [LexoRank ranking system](https://youtu.be/OjQv9xMoFbg) by Atlassian JIRA.
 
+[![npm version](https://badge.fury.io/js/@kayron013%2Flexorank.svg)](https://badge.fury.io/js/@kayron013%2Flexorank)
+
 ## Usage
 
 ### Create and read rank.
