@@ -1,6 +1,11 @@
 # LexoRank
 
-An immutable class implementation of the [LexoRank ranking system](https://youtu.be/OjQv9xMoFbg) by Atlassian JIRA.
+A lightweight immutable class implementation of the [LexoRank ranking system](https://youtu.be/OjQv9xMoFbg) by Atlassian JIRA.
+
+This library provides the following functionality with unbounded rank lengths:
+- Creating ranks
+- Incrementing & decrementing ranks
+- Finding a rank between two other ranks
 
 [![npm version](https://badge.fury.io/js/@kayron013%2Flexorank.svg)](https://badge.fury.io/js/@kayron013%2Flexorank)
 
