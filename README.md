@@ -2,12 +2,16 @@
 
 A lightweight immutable class implementation of the [LexoRank ranking system](https://youtu.be/OjQv9xMoFbg) by Atlassian JIRA.
 
+[![npm version](https://img.shields.io/npm/v/@kayron013/lexorank)](https://badge.fury.io/js/@kayron013%2Flexorank)
+[![license](https://img.shields.io/github/license/kayron013/lexorank)](https://github.com/Kayron013/LexoRank/blob/master/LICENSE)
+
+## Features
+
 This library provides the following functionality with unbounded rank lengths:
+
 - Creating ranks
 - Incrementing & decrementing ranks
 - Finding a rank between two other ranks
-
-[![npm version](https://badge.fury.io/js/@kayron013%2Flexorank.svg)](https://badge.fury.io/js/@kayron013%2Flexorank)
 
 ## Usage
 
